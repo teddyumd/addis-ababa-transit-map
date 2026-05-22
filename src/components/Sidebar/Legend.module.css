@@ -3,18 +3,91 @@
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
-.section { margin-bottom: 6px; }
-.section:last-child { margin-bottom: 0; }
-.sectionTitle {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
+
+.section {
   margin-bottom: 4px;
 }
-.items { display: flex; flex-wrap: wrap; gap: 4px 10px; }
-.item { display: flex; align-items: center; gap: 5px; }
-.solidLine { width: 20px; height: 3px; border-radius: 2px; flex-shrink: 0; }
-.dashedLine { width: 20px; border-top: 3px dashed; flex-shrink: 0; }
-.itemLabel { font-size: 10px; color: var(--text-secondary); white-space: nowrap; }
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 0;
+  background: none;
+  border: 0;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-align: left;
+  text-transform: uppercase;
+  transition: color 0.16s ease;
+}
+
+.sectionTitle:hover {
+  color: var(--text-primary);
+}
+
+.chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  flex: 0 0 7px;
+  transform: rotate(45deg);
+  transition: transform 0.18s ease;
+}
+
+.chevronOpen {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.22s ease,
+    opacity 0.18s ease;
+}
+
+.itemsOpen {
+  max-height: 92px;
+  opacity: 1;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.solidLine {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.dashedLine {
+  width: 20px;
+  border-top: 3px dashed;
+  flex-shrink: 0;
+}
+
+.itemLabel {
+  font-size: 10px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}

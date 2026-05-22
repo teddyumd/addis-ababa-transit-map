@@ -8,3 +8,65 @@
   width: 100%;
   height: 100%;
 }
+
+.basemapSwitcher {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 450;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: rgba(13, 17, 23, 0.9);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.basemapButton {
+  min-height: 28px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.basemapButton:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+
+.basemapButton:active {
+  transform: scale(0.96);
+}
+
+.basemapButtonActive {
+  background: var(--bus-accent);
+  color: #061018;
+}
+
+@media (max-width: 760px) {
+  .basemapSwitcher {
+    top: 10px;
+    right: 10px;
+    max-width: calc(100vw - 20px);
+    overflow-x: auto;
+  }
+
+  .basemapButton {
+    min-height: 30px;
+    padding: 0 8px;
+    font-size: 9px;
+  }
+}
