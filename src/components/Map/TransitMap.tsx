@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   MapContainer,
+  LayersControl,
   TileLayer,
   Polyline,
   Popup,
@@ -16,7 +17,6 @@ import {
   MINIBUS_DASH,
   OPACITY_ACTIVE, OPACITY_DEFAULT, OPACITY_DIMMED, OPACITY_HIDDEN,
 } from '@/constants/map';
-import type { BasemapId } from '@/constants/map';
 import styles from './Map.module.css';
 
 interface TransitMapProps {
@@ -35,11 +35,6 @@ function MapClickHandler() {
 export function TransitMap({ routes }: TransitMapProps) {
   const { state, selectRoute, clearSelection } = useAppContext();
   const mapRef = useRef<LeafletMap | null>(null);
-  const [basemapId, setBasemapId] = useState<BasemapId>('dark');
-  const basemap = useMemo(
-    () => BASEMAPS.find((candidate) => candidate.id === basemapId) ?? BASEMAPS[0],
-    [basemapId]
-  );
 
   const handleRouteClick = useCallback(
     (route: Route, e: { originalEvent: Event }) => {
@@ -61,20 +56,6 @@ export function TransitMap({ routes }: TransitMapProps) {
 
   return (
     <div className={styles.mapWrapper}>
-      <div className={styles.basemapSwitcher} aria-label="Choose map background">
-        {BASEMAPS.map((candidate) => (
-          <button
-            key={candidate.id}
-            className={`${styles.basemapButton} ${candidate.id === basemapId ? styles.basemapButtonActive : ''}`}
-            type="button"
-            aria-pressed={candidate.id === basemapId}
-            onClick={() => setBasemapId(candidate.id)}
-          >
-            {candidate.label}
-          </button>
-        ))}
-      </div>
-
       <MapContainer
         center={MAP_CENTER}
         zoom={MAP_ZOOM}
@@ -82,12 +63,21 @@ export function TransitMap({ routes }: TransitMapProps) {
         preferCanvas
         ref={mapRef}
       >
-        <TileLayer
-          key={basemap.id}
-          url={basemap.url}
-          attribution={basemap.attribution}
-          maxZoom={basemap.maxZoom}
-        />
+        <LayersControl position="topright" collapsed>
+          {BASEMAPS.map((basemap, index) => (
+            <LayersControl.BaseLayer
+              key={basemap.id}
+              name={basemap.label}
+              checked={index === 0}
+            >
+              <TileLayer
+                url={basemap.url}
+                attribution={basemap.attribution}
+                maxZoom={basemap.maxZoom}
+              />
+            </LayersControl.BaseLayer>
+          ))}
+        </LayersControl>
         <MapClickHandler />
 
         {routes.map((route) => {
