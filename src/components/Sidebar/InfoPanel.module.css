@@ -1,0 +1,21 @@
+.panel {
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface-0);
+  min-height: 80px;
+}
+.hint { font-size: 11px; color: var(--text-muted); font-style: italic; }
+.titleRow { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.badge {
+  padding: 2px 8px; border-radius: 3px;
+  font-size: 11px; font-weight: 700; color: #000;
+}
+.mode { font-size: 11px; color: var(--text-muted); }
+.routeName { font-size: 12px; color: var(--text-primary); font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+.rows { display: flex; flex-direction: column; gap: 2px; }
+.row { display: flex; gap: 6px; font-size: 11px; }
+.rowLabel { color: var(--text-muted); white-space: nowrap; min-width: 60px; }
+.rowValue { color: var(--text-secondary); }
+.small { font-size: 10px; line-height: 1.4; }
+.hwBadge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; }

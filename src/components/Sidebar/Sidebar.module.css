@@ -1,0 +1,9 @@
+.sidebar {
+  width: 282px;
+  flex-shrink: 0;
+  background: var(--surface-1);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}

@@ -1,0 +1,65 @@
+.popup {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  min-width: 220px;
+  padding: 2px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.badge {
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.modeTag {
+  font-size: 11px;
+  color: #666;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.table {
+  font-size: 11px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table td {
+  padding: 2px 0;
+  vertical-align: top;
+}
+
+.label {
+  color: #888;
+  padding-right: 10px !important;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.hwBadge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.terminals {
+  font-size: 10px;
+  color: #444;
+  line-height: 1.4;
+}

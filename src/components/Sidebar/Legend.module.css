@@ -1,0 +1,20 @@
+.legend {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.section { margin-bottom: 6px; }
+.section:last-child { margin-bottom: 0; }
+.sectionTitle {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 4px;
+}
+.items { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.item { display: flex; align-items: center; gap: 5px; }
+.solidLine { width: 20px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+.dashedLine { width: 20px; border-top: 3px dashed; flex-shrink: 0; }
+.itemLabel { font-size: 10px; color: var(--text-secondary); white-space: nowrap; }

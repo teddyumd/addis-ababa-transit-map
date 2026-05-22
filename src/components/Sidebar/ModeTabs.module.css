@@ -1,0 +1,23 @@
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.tab {
+  flex: 1;
+  padding: 9px 4px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: var(--font-body);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.tab:hover { color: var(--text-primary); background: var(--surface-2); }
+.tab.active { color: var(--text-primary); background: var(--surface-2); }
+.tab.active.all     { border-bottom-color: #aaa; }
+.tab.active.bus     { border-bottom-color: var(--bus-accent); }
+.tab.active.minibus { border-bottom-color: var(--mini-accent); }
