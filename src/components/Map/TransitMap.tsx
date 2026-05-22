@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   MapContainer,
   LayersControl,
@@ -7,7 +7,7 @@ import {
   Popup,
   useMapEvents,
 } from 'react-leaflet';
-import type { Map as LeafletMap, LatLngExpression } from 'leaflet';
+import type { Map as LeafletMap, LatLngExpression, Polyline as LeafletPolyline } from 'leaflet';
 import type { Route } from '@/types/transit';
 import { useAppContext } from '@/context/AppContext';
 import { RoutePopup } from './RoutePopup';
@@ -35,24 +35,43 @@ function MapClickHandler() {
 export function TransitMap({ routes }: TransitMapProps) {
   const { state, selectRoute, clearSelection } = useAppContext();
   const mapRef = useRef<LeafletMap | null>(null);
+  const polylineRefs = useRef(new Map<number, LeafletPolyline>());
+  const preferredPopupShapeId = useRef<number | null>(null);
 
   const handleRouteClick = useCallback(
-    (route: Route, e: { originalEvent: Event }) => {
+    (route: Route, shapeId: number, e: { originalEvent: Event }) => {
       e.originalEvent.stopPropagation();
+      preferredPopupShapeId.current = shapeId;
       selectRoute(route);
-
-      // Fit map to the selected route
-      const latlngs: LatLngExpression[] = route.shapes.flatMap((s) =>
-        s.coords.map(([lng, lat]) => [lat, lng] as LatLngExpression)
-      );
-      if (mapRef.current && latlngs.length > 0) {
-        const L = (window as unknown as { L: typeof import('leaflet') }).L;
-        const bounds = L.latLngBounds(latlngs);
-        mapRef.current.fitBounds(bounds, { padding: [50, 50] });
-      }
     },
     [selectRoute]
   );
+
+  useEffect(() => {
+    const route = state.selectedRoute;
+    if (!route) {
+      preferredPopupShapeId.current = null;
+      return;
+    }
+
+    const latlngs: LatLngExpression[] = route.shapes.flatMap((shape) =>
+      shape.coords.map(([lng, lat]) => [lat, lng] as LatLngExpression)
+    );
+
+    if (mapRef.current && latlngs.length > 0) {
+      const L = (window as unknown as { L: typeof import('leaflet') }).L;
+      const bounds = L.latLngBounds(latlngs);
+      mapRef.current.fitBounds(bounds, { padding: [50, 50] });
+    }
+
+    const popupShapeId = preferredPopupShapeId.current ?? route.shapes[0]?.id;
+    if (!popupShapeId) return;
+
+    window.setTimeout(() => {
+      polylineRefs.current.get(popupShapeId)?.openPopup();
+      preferredPopupShapeId.current = null;
+    }, 180);
+  }, [state.selectedRoute]);
 
   return (
     <div className={styles.mapWrapper}>
@@ -117,7 +136,14 @@ export function TransitMap({ routes }: TransitMapProps) {
                   lineJoin: 'round',
                 }}
                 eventHandlers={{
-                  click: (e) => handleRouteClick(route, e),
+                  click: (e) => handleRouteClick(route, shape.id, e),
+                }}
+                ref={(layer) => {
+                  if (layer) {
+                    polylineRefs.current.set(shape.id, layer);
+                  } else {
+                    polylineRefs.current.delete(shape.id);
+                  }
                 }}
               >
                 <Popup>
