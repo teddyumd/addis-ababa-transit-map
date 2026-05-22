@@ -4,11 +4,32 @@ interface HeaderProps {
   busCount: number;
   minibusCount: number;
   tripCount: number;
+  isMenuOpen: boolean;
+  onMenuToggle: () => void;
 }
 
-export function Header({ busCount, minibusCount, tripCount }: HeaderProps) {
+export function Header({
+  busCount,
+  minibusCount,
+  tripCount,
+  isMenuOpen,
+  onMenuToggle,
+}: HeaderProps) {
   return (
     <header className={styles.header}>
+      <button
+        className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ''}`}
+        type="button"
+        aria-label={isMenuOpen ? 'Close route menu' : 'Open route menu'}
+        aria-expanded={isMenuOpen}
+        aria-controls="route-menu"
+        onClick={onMenuToggle}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
       <div className={styles.brand}>
         <h1 className={styles.title}>
           <span className={styles.icon}>🚌</span>

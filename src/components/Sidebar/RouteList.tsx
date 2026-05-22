@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import type { Route } from '@/types/transit';
 import { useAppContext } from '@/context/AppContext';
 import { useFilteredRoutes } from '@/hooks/useFilteredRoutes';
@@ -8,9 +8,10 @@ import styles from './RouteList.module.css';
 
 interface RouteListProps {
   routes: Route[];
+  onRouteSelect?: () => void;
 }
 
-export function RouteList({ routes }: RouteListProps) {
+export function RouteList({ routes, onRouteSelect }: RouteListProps) {
   const { state, selectRoute } = useAppContext();
   const filtered = useFilteredRoutes(routes);
   const activeRef = useRef<HTMLButtonElement | null>(null);
@@ -35,7 +36,10 @@ export function RouteList({ routes }: RouteListProps) {
           key={route.key}
           route={route}
           isActive={route.key === state.selectedRouteKey}
-          onClick={() => selectRoute(route)}
+          onClick={() => {
+            selectRoute(route);
+            onRouteSelect?.();
+          }}
           ref={route.key === state.selectedRouteKey ? activeRef : null}
         />
       ))}
@@ -47,10 +51,12 @@ interface RouteItemProps {
   route: Route;
   isActive: boolean;
   onClick: () => void;
-  ref: React.Ref<HTMLButtonElement> | null;
 }
 
-function RouteItem({ route, isActive, onClick, ref }: RouteItemProps) {
+const RouteItem = forwardRef<HTMLButtonElement, RouteItemProps>(function RouteItem(
+  { route, isActive, onClick },
+  ref
+) {
   const zoneLabel =
     route.mode === 'bus'
       ? BUS_ZONES[route.zone as keyof typeof BUS_ZONES]?.label
@@ -81,4 +87,4 @@ function RouteItem({ route, isActive, onClick, ref }: RouteItemProps) {
       </div>
     </button>
   );
-}
+});

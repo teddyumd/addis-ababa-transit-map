@@ -9,15 +9,17 @@ import styles from './Sidebar.module.css';
 
 interface SidebarProps {
   routes: Route[];
+  isOpen: boolean;
+  onRequestClose: () => void;
 }
 
-export function Sidebar({ routes }: SidebarProps) {
+export function Sidebar({ routes, isOpen, onRequestClose }: SidebarProps) {
   return (
-    <aside className={styles.sidebar}>
+    <aside id="route-menu" className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <ModeTabs />
       <SearchBar />
       <Legend />
-      <RouteList routes={routes} />
+      <RouteList routes={routes} onRouteSelect={onRequestClose} />
       <ClearButton />
       <InfoPanel />
     </aside>

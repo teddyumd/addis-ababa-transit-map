@@ -7,3 +7,29 @@
   flex-direction: column;
   overflow: hidden;
 }
+
+@media (max-width: 760px) {
+  .sidebar {
+    position: fixed;
+    top: 54px;
+    right: 0;
+    bottom: 0;
+    z-index: 600;
+    width: min(86vw, 340px);
+    border-left: 1px solid var(--border-strong);
+    box-shadow: -18px 0 40px rgba(0, 0, 0, 0.44);
+    transform: translateX(102%);
+    visibility: hidden;
+    transition:
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.26s;
+  }
+
+  .open {
+    transform: translateX(0);
+    visibility: visible;
+    transition:
+      transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s;
+  }
+}
