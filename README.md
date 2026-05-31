@@ -37,6 +37,17 @@ npm run build
 npm run preview
 ```
 
+## AI Help Bot
+
+The app includes a prototype AI Help Bot powered by Qwen through Alibaba Cloud Model Studio's OpenAI-compatible API.
+
+1. Copy `.env.example` to `.env`
+2. Set `QWEN_API_KEY`
+3. Optionally change `QWEN_MODEL` or `QWEN_BASE_URL`
+4. Run `npm run dev`
+
+The key is read by the Vite dev server in `vite.config.ts` and is not exposed to browser code. For production static hosting, add an equivalent serverless/API endpoint and keep the same `/api/ai-help` browser contract.
+
 ## Project Structure
 
 ```

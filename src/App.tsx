@@ -5,6 +5,7 @@ import { useTransitData } from '@/hooks/useTransitData';
 import { Header } from '@/components/Header/Header';
 import { TransitMap } from '@/components/Map/TransitMap';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
+import { AIHelpBot } from '@/components/AIHelpBot/AIHelpBot';
 import styles from './App.module.css';
 
 function AppContent() {
@@ -54,6 +55,7 @@ function AppContent() {
           isOpen={isMenuOpen}
           onRequestClose={() => setIsMenuOpen(false)}
         />
+        <AIHelpBot />
       </div>
     </div>
   );
